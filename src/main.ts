@@ -7,6 +7,9 @@ import router from "./router/router";
 import VueCookies from "vue-cookies";
 import { PiniaLogger } from "pinia-logger";
 
+import Toast, { POSITION } from "vue-toastification";
+import "vue-toastification/dist/index.css";
+
 const app = createApp(App);
 
 const pinia = createPinia();
@@ -16,6 +19,11 @@ pinia.use(
     disabled: import.meta.env.mode === "PRODUCTION",
   })
 );
+
+app.use(Toast, {
+  position: POSITION.BOTTOM_RIGHT,
+  timeout: 3000,
+});
 
 app.use(pinia);
 app.use(router);
