@@ -18,7 +18,7 @@
 - texts: Array[Text]
 - images: Array[Images]
 - isCompleted: Boolean
-- authorId
+- authorId: Number
 
 ### Модель туду:
 
