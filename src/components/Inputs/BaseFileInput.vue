@@ -18,13 +18,14 @@
 </template>
 
 <script setup lang="ts">
-interface ITextInputProps {
-  modelValue: string | any;
-  name: string;
-  label: string;
+export interface IFileProps {
+  modelValue: string | boolean | undefined | unknown;
+  name: string | undefined;
+  label: string | undefined;
 }
+
 const emit = defineEmits(["update:modelValue"]);
-const props = defineProps<ITextInputProps>();
+const props = defineProps<IFileProps>();
 
 const change = async (event: InputEvent | any) => {
   const file = event.target.files[0];

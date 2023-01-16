@@ -24,5 +24,7 @@ module.exports = {
   rules: {
     "@typescript-eslint/ban-ts-comment": "off",
     "vue/prefer-import-from-vue": "off",
+    "vue/no-mutating-props": "warn",
+   
   },
 };

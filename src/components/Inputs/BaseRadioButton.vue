@@ -1,6 +1,6 @@
 <template>
   <div class="flex gap-4 w-full p-4 items-center justify-center">
-    <label :for="props.name" class="radio-label" @click="change">
+    <label class="radio-label" @click="change">
       <span class="mark" />
       {{ props.value }}</label
     >
@@ -9,19 +9,18 @@
 
 <script setup lang="ts">
 import { computed } from "@vue/reactivity";
-interface ITextInputProps {
-  modelValue: string | any;
-  value: string;
-  name: string;
-  label: string;
-}
-const emit = defineEmits(["update:modelValue"]);
-const props = defineProps<ITextInputProps>();
 
-const change = async () => {
+export interface IRadioProps {
+  modelValue: string | boolean | undefined | unknown;
+  value: string | undefined;
+}
+
+const emit = defineEmits(["update:modelValue"]);
+const props = defineProps<IRadioProps>();
+
+const change = () => {
   emit("update:modelValue", props.value);
 };
-
 const computedChecked = computed(() => {
   const isChecked = props.modelValue === props.value;
   return isChecked ? 1 : 0;

@@ -6,12 +6,12 @@
     >
       {{ props.label }}</label
     >
-    <input
+    <textarea
       :name="props.name"
       @input="change"
-      type="text"
-      :id="props.name"
-      class="w-full p-2 border-2 border-green-400 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
+      type="textarea"
+      id="textarea"
+      class="p-4 border-2 h-64 w-full bg-white border-green-400 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400"
     />
   </div>
 </template>
@@ -19,8 +19,8 @@
 <script setup lang="ts">
 export interface ITextProps {
   modelValue: string | boolean | undefined | unknown;
-  name: string;
-  label: string;
+  name: string | undefined;
+  label: string | undefined;
 }
 
 const emit = defineEmits(["update:modelValue"]);
