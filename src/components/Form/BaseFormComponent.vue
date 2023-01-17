@@ -1,27 +1,28 @@
 <template>
   <form
     @submit.prevent="props.onSubmit"
-    :class="`w-full max-w-[40rem] bg-gray-800 rounded-xl md:p-4 p-2 flex items-center justify-center border-2 border-orange-500 ${
+    :class="`forma bg-gray-800 rounded-xl md:p-4 p-2 flex items-center justify-center border-2 border-orange-500  ${
       props.isRow ? ' gap-4' : 'flex-col'
     }`"
   >
+    <div />
+
     <h3
       v-if="props.heading"
       class="text-3xl text-orange-500 font-bold self-start p-4"
     >
       {{ props.heading }}
     </h3>
+
     <slot />
-    <button
-      type="submit"
-      class="border-2 border-green-500 mx-auto text-2xl font-bold rounded-xl text-green-500 px-4 py-2 hover:bg-green-500 active:bg-green-600 hover:text-white transition-all"
-    >
-      Submit
-    </button>
+
+    <BaseReusableButton text="Submit" />
   </form>
 </template>
 
 <script setup lang="ts">
+import BaseReusableButton from "../Buttons/BaseReusableButton.vue";
+
 interface IFormProps {
   onSubmit: () => any;
   isRow?: boolean;
@@ -30,4 +31,8 @@ interface IFormProps {
 const props = defineProps<IFormProps>();
 </script>
 
-<style scoped></style>
+<style scoped>
+.forma {
+  width: clamp(20rem, 75vw, 40rem);
+}
+</style>

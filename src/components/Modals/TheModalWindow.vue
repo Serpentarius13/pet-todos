@@ -7,7 +7,10 @@
         v-if="modalState?.component"
       >
         <div ref="boxRef">
-          <component :is="modalState?.component" v-bind="modalState?.props" />
+          <component
+            :is="{ ...modalState?.component }"
+            v-bind="modalState?.props"
+          />
         </div>
       </div>
     </Transition>

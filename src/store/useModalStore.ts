@@ -1,7 +1,9 @@
 import { defineStore } from "pinia";
 
 import { IStoreProps, IStoreState } from "@/types/modal";
-import BaseLoaderVue from "@/components/BaseLoader.vue";
+import TheLoader from "@/components/States/TheLoader.vue";
+import TheError from "@/components/States/TheError.vue";
+import TheEmojiFormVue from "@/components/Form/TheEmojiForm.vue";
 
 const useModalStore = defineStore("modalStore", {
   state: (): IStoreState => ({
@@ -33,7 +35,14 @@ const useModalStore = defineStore("modalStore", {
     },
 
     openModalWithLoader() {
-      this.openModal({ component: BaseLoaderVue });
+      this.openModal({ component: TheLoader });
+    },
+
+    openModalWithError() {
+      this.openModal({ component: TheError });
+    },
+    openModalWithStartDayForm() {
+      this.openModal({ component: TheEmojiFormVue });
     },
   },
 });

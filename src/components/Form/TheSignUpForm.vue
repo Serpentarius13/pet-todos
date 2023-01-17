@@ -18,6 +18,9 @@ import BaseFormComponent from "./BaseFormComponent.vue";
 import signUp from "@/variables/zod/signUp";
 import useToastedForm from "@/composables/useToastedForm";
 import { register } from "@/utils/firebase";
+import useLoadingStore from "@/store/useLoadingStore";
+
+const loadStore = useLoadingStore();
 
 const validate = useToastedForm(signUp, {
   email: "",
@@ -25,11 +28,19 @@ const validate = useToastedForm(signUp, {
 });
 
 const onSubmit = async () => {
-  const isValid = await validate();
-  if (!isValid) return;
+  try {
+    loadStore.load();
+    const isValid = await validate();
+    if (!isValid) return;
 
-  const res = await register(email.value, password.value);
-  console.log(res);
+    const res = await register(email.value, password.value);
+    console.log(res);
+    loadStore.unload();
+  } catch (error) {
+    loadStore.unload();
+    console.log(error);
+    loadStore.error();
+  }
 };
 
 const { value: email } = useField<string>("email");

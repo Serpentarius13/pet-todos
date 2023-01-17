@@ -1,43 +1,36 @@
 <template>
-  <TheSignUpForm />
-  <TheLoginForm />
+  <TheDaysPreview v-if="isAuth" />
 </template>
 
 <script setup lang="ts">
-import TheLoginForm from "@/components/Form/TheLoginForm.vue";
-import TheSignUpForm from "@/components/Form/TheSignUpForm.vue";
-import { todosRef } from "@/utils/firebase";
-import { addDoc } from "@firebase/firestore";
-import { useRoute, useRouter } from "vue-router";
-import {
-  useCollection,
-  useCurrentUser,
-  useDocument,
-  useFirebaseAuth,
-} from "vuefire";
+import { useRouter } from "vue-router";
+import { getCurrentUser } from "vuefire";
 
-import useModalStore from "@/store/useModalStore";
-import { onMounted } from "vue";
+import TheDaysPreview from "./TheDaysPreview.vue";
+import useLoadingStore from "@/store/useLoadingStore";
+import { onMounted, Ref, ref } from "vue";
 
 const router = useRouter();
-const auth = useFirebaseAuth();
 
-const store = useModalStore();
+const store = useLoadingStore();
 
-onMounted(() => {
-  store.openModalWithLoader();
+const isAuth: Ref<boolean> = ref(false);
+
+onMounted(async () => {
+  try {
+    store.load();
+    const user = await getCurrentUser();
+    if (!user) {
+      router.push("/login");
+    } else {
+      isAuth.value = true;
+      store.unload();
+    }
+  } catch (error) {
+    store.error();
+    console.log(error);
+  }
 });
-
-const timeout = setTimeout(() => router.push("/login"), 2000);
-
-auth?.onAuthStateChanged((user) => {
-  clearTimeout(timeout);
-  store.closeModal();
-  console.log("changed");
-});
-
-const collec = useCollection(todosRef);
-console.log(collec.value);
 </script>
 
 <style scoped></style>

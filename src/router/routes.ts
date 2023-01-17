@@ -12,6 +12,12 @@ const routes: IRoute[] = [
     component: () => import("@/views/PageLogin.vue"),
     name: "Login",
   },
+
+  {
+    path: "/test",
+    component: () => import("@/views/PageTest.vue"),
+    name: "Test",
+  },
 ];
 
 export default routes;
