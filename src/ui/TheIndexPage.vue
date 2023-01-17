@@ -1,31 +1,43 @@
 <template>
-  <BaseFormComponent :onSubmit="onSubmit" isRow>
-    <BaseRadioButton
-      v-for="emoji in emojis"
-      :value="emoji"
-      v-model="emojiValue"
-      :key="emoji"
-    />
-  </BaseFormComponent>
+  <TheSignUpForm />
+  <TheLoginForm />
 </template>
 
 <script setup lang="ts">
-import BaseFormComponent from "@/components/Form/BaseFormComponent.vue";
-import BaseRadioButton from "@/components/Inputs/BaseRadioButton.vue";
-import useToastedForm from "@/composables/useToastedForm";
-import startDay from "@/variables/zod/startDay";
-import { useField } from "vee-validate";
-const emojis = ["😸", "😼", "🙀", "😿", "😾"];
+import TheLoginForm from "@/components/Form/TheLoginForm.vue";
+import TheSignUpForm from "@/components/Form/TheSignUpForm.vue";
+import { todosRef } from "@/utils/firebase";
+import { addDoc } from "@firebase/firestore";
+import { useRoute, useRouter } from "vue-router";
+import {
+  useCollection,
+  useCurrentUser,
+  useDocument,
+  useFirebaseAuth,
+} from "vuefire";
 
-const validate = useToastedForm(startDay, {
-  mood: emojis[0],
+import useModalStore from "@/store/useModalStore";
+import { onMounted } from "vue";
+
+const router = useRouter();
+const auth = useFirebaseAuth();
+
+const store = useModalStore();
+
+onMounted(() => {
+  store.openModalWithLoader();
 });
 
-const { value: emojiValue } = useField("mood");
+const timeout = setTimeout(() => router.push("/login"), 2000);
 
-const onSubmit = async () => {
-  console.log(emojiValue.value);
-};
+auth?.onAuthStateChanged((user) => {
+  clearTimeout(timeout);
+  store.closeModal();
+  console.log("changed");
+});
+
+const collec = useCollection(todosRef);
+console.log(collec.value);
 </script>
 
 <style scoped></style>

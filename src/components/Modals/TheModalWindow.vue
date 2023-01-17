@@ -42,7 +42,7 @@ const modalState: Ref<IStoreProps | null> = shallowRef(null);
 
 //* Subscribe to store to watch modal state being mutated from other components and adding event listener for Escape keydown close
 onMounted(() => {
-  store.$onAction(({ store }) => {
+  store.$subscribe((sub) => {
     modalState.value = store.$state.modalState;
   });
   document.addEventListener("keydown", (event) => {
@@ -77,13 +77,13 @@ onUnmounted(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(2px);
   }
 }
 
 .modalFade-enter-active,
 .modalFade-leave-active {
-  transition: all 0.15s ease-out;
+  transition: all 0.1s ease-out;
 }
 
 .modalFade-enter-from,

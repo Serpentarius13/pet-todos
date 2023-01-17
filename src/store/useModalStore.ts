@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 
 import { IStoreProps, IStoreState } from "@/types/modal";
+import BaseLoaderVue from "@/components/BaseLoader.vue";
 
 const useModalStore = defineStore("modalStore", {
   state: (): IStoreState => ({
@@ -29,6 +30,10 @@ const useModalStore = defineStore("modalStore", {
       const docElement = document.querySelector("body");
 
       if (docElement) docElement.style.overflow = "auto";
+    },
+
+    openModalWithLoader() {
+      this.openModal({ component: BaseLoaderVue });
     },
   },
 });

@@ -10,6 +10,8 @@ import { PiniaLogger } from "pinia-logger";
 import Toast, { POSITION } from "vue-toastification";
 import "vue-toastification/dist/index.css";
 
+import { firebaseApp } from "./utils/firebase";
+import { VueFireAuth, VueFire } from "vuefire";
 const app = createApp(App);
 
 const pinia = createPinia();
@@ -23,6 +25,11 @@ pinia.use(
 app.use(Toast, {
   position: POSITION.BOTTOM_RIGHT,
   timeout: 3000,
+});
+
+app.use(VueFire, {
+  firebaseApp,
+  modules: [VueFireAuth()],
 });
 
 app.use(pinia);

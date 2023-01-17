@@ -1,10 +1,16 @@
 <template>
   <form
     @submit.prevent="props.onSubmit"
-    :class="`w-full max-w-[40rem] bg-gray-800 rounded-xl p-4 flex items-center justify-center ${
+    :class="`w-full max-w-[40rem] bg-gray-800 rounded-xl md:p-4 p-2 flex items-center justify-center border-2 border-orange-500 ${
       props.isRow ? ' gap-4' : 'flex-col'
     }`"
   >
+    <h3
+      v-if="props.heading"
+      class="text-3xl text-orange-500 font-bold self-start p-4"
+    >
+      {{ props.heading }}
+    </h3>
     <slot />
     <button
       type="submit"
@@ -16,7 +22,12 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{ onSubmit: () => any | void; isRow: boolean }>();
+interface IFormProps {
+  onSubmit: () => any;
+  isRow?: boolean;
+  heading?: string;
+}
+const props = defineProps<IFormProps>();
 </script>
 
 <style scoped></style>
