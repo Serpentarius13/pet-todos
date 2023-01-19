@@ -1,12 +1,28 @@
 import { query, getDocs, where } from "firebase/firestore";
 import { daysRef, imagesRef, textsRef, todosRef } from "./collections";
 import extractData from "./extractData";
+import { IDay } from "../types/dataTypes";
+import checkSkippedDays from "./checkSkippedDays";
 
-export const getDaysForUser = async (userId: string | number | unknown | undefined) => {
+export const getDaysForUser = async (
+  userId: string | number | unknown | undefined
+): Promise<IDay[]> => {
   const queryStr = query(daysRef, where("authorId", "==", userId));
   const snapshot = await getDocs(queryStr);
 
-  return extractData(snapshot);
+  let days: IDay[] = extractData(snapshot);
+
+  if (days.length >= 2)
+    days = days.sort((a, b) => {
+      return (
+        Date.parse(b.date.toLocaleString()) -
+        Date.parse(a.date.toLocaleString())
+      );
+    });
+
+  await checkSkippedDays(days);
+
+  return days;
 };
 
 type TColletionName = "todos" | "images" | "texts";

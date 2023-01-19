@@ -1,5 +1,5 @@
 //@ts-nocheck
-export default (date: string | undefined | null) => {
+export default (date: string | undefined | null | Date) => {
   if (date === null || date === undefined) return;
   const today = new Date();
 

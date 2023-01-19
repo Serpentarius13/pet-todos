@@ -42,11 +42,14 @@ const onSubmit = async () => {
 
     const days = await getDaysForUser(user?.uid);
     let isCheckedForToday;
-    console.log(days);
-    days.forEach((day) => {
-      console.log(day);
-      if (isTodaysDate(day?.date)) isCheckedForToday = true;
-    });
+
+    if (days.length) {
+      days.forEach((day) => {
+        console.log(day);
+        if (isTodaysDate(day?.date)) isCheckedForToday = true;
+      });
+    }
+
     if (isCheckedForToday) {
       alert("You have already checked in for today!");
       location.reload();
@@ -54,7 +57,7 @@ const onSubmit = async () => {
     }
 
     const todayDate = new Date().toUTCString();
-    const newDay: Omit<IDay, "dayId"> = {
+    const newDayModel: Omit<IDay, "dayId"> = {
       date: todayDate,
       mood: emojiValue.value,
       todos: [],
@@ -62,10 +65,11 @@ const onSubmit = async () => {
       images: [],
       isCompleted: false,
       authorId: user?.uid ? user.uid : "1",
-      dayCount: days.length + 1
+      dayCount: days.length + 1,
+      isSkipped: false,
     };
 
-    await addDoc(daysRef, newDay);
+    await addDoc(daysRef, newDayModel);
     loadStore.unload();
   } catch (error) {
     loadStore.error();

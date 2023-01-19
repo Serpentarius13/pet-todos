@@ -1,6 +1,6 @@
 <template>
   <button
-    class="px-8 py-4 bg-green-500 hover:bg-green-600 active:bg-green-700 transition-colors font-extrabold text-white text-4xl"
+    class="px-8 py-4 bg-green-500 hover:bg-green-600 active:bg-green-700 transition-colors font-extrabold text-white text-4xl rounded-xl"
     @click="open"
   >
     Start the day!

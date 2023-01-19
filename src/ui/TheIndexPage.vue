@@ -1,14 +1,14 @@
 <template>
-  <TheDaysPreview v-if="isAuth" />
+<TheDaysComponent/>
 </template>
 
 <script setup lang="ts">
 import { useRouter } from "vue-router";
 import { getCurrentUser } from "vuefire";
 
-import TheDaysPreview from "./TheDaysPreview.vue";
 import useLoadingStore from "@/store/useLoadingStore";
 import { onMounted, Ref, ref } from "vue";
+import TheDaysComponent from "@/components/Day/TheDaysComponent.vue";
 
 const router = useRouter();
 

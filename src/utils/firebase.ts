@@ -6,6 +6,8 @@ import {
   query,
   where,
 } from "firebase/firestore";
+
+import hashGenerator from "@/functions/hashGenerator";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -13,6 +15,7 @@ import {
 import initFirebase from "./initFirebase";
 import { daysRef, textsRef } from "./collections";
 import extractData from "./extractData";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 // ... other firebase imports
 
@@ -37,3 +40,11 @@ export const login = async (email: string, password: string) => {
   return user;
 };
 
+const storage = getStorage(firebaseApp);
+export const uploadFileWithLink = async (file: File) => {
+  const fileRef = ref(storage, file.name + hashGenerator(16));
+
+  await uploadBytes(fileRef, file);
+  const url = await getDownloadURL(fileRef);
+  return url;
+};

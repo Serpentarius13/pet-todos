@@ -1,5 +1,4 @@
 export interface IDay {
-  dayId: string;
   mood: string;
   isCompleted: boolean;
   date: Date | string;
@@ -8,6 +7,8 @@ export interface IDay {
   todos: string[];
   authorId: number | string
   dayCount: number 
+  id?: string | number
+  isSkipped?: boolean
 }
 
 export interface ITodo {
@@ -15,15 +16,18 @@ export interface ITodo {
   completionState: number | null;
   link: string;
   description: string | null;
+  dayId: string | number
 }
 
 export interface IImage {
   imageUrl: string;
   title: string | null;
   text: string | null;
+  dayId: string | number
 }
 
 export interface IText {
   title: string | null;
   text: string;
+  dayId: string | number
 }

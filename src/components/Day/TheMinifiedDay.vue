@@ -1,5 +1,6 @@
 <template>
-  <div class="minifiedWrap">
+  <TheSkippedDay :day="props.day.date" v-if="props.day.isSkipped" />
+  <div class="minifiedWrap" v-else>
     <p class="textSpan">
       Day <span> {{ props.day.dayCount }} </span>
     </p>
@@ -37,6 +38,8 @@ import { IDay } from "@/types/dataTypes";
 import { onMounted } from "vue";
 import BaseReusableButton from "../Buttons/BaseReusableButton.vue";
 import { useRouter } from "vue-router";
+import getDate from "@/functions/getDate";
+import TheSkippedDay from "./TheSkippedDay.vue";
 
 // }
 
@@ -48,11 +51,11 @@ const props = defineProps<IMinifiedDayProps>();
 const router = useRouter();
 
 const navigateToDay = () => {
-  router.push(`/day/${props.day.dayId}`);
+  router.push(`/day/${props.day.id}`);
 };
 </script>
 
-<style scoped>
+<style>
 .minifiedWrap {
   width: clamp(15rem, 45vw, 20rem);
   @apply border-4 border-orange-500 rounded-xl p-2 md:p-4 flex flex-col items-center justify-center gap-2 bg-gray-800;

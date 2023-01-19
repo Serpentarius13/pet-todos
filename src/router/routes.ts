@@ -14,9 +14,21 @@ const routes: IRoute[] = [
   },
 
   {
+    path: "/day/:id",
+    component: () => import("@/views/PageDay.vue"),
+    name: "Day",
+  },
+
+  {
     path: "/test",
     component: () => import("@/views/PageTest.vue"),
     name: "Test",
+  },
+
+  {
+    path: "/:pathMatch(.*)*",
+    component: () => import("@/views/PageError.vue"),
+    name: "Error",
   },
 ];
 
